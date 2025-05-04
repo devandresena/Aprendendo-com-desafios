@@ -46,8 +46,7 @@ function adicionar() {
         //!!!!!!!precisa multiplicar pela quantidade antes
         valorTotal = valorTotal + (parseInt(todosSpanProduto[0].textContent.replace("x", "")) * parseInt(todosSpanProduto[1].textContent.replace("R$", "")));
     }
-    let textoValorTotal = document.getElementById("valor-total");
-    textoValorTotal.textContent = `R$${valorTotal}`;
+    document.getElementById("valor-total").textContent = `R$${valorTotal}`;
 
     //Limpa seleção atual
     document.getElementById("produto").value = "Fone de ouvido - R$100";
@@ -58,4 +57,5 @@ function limpar() {
     document.getElementById("produto").value = "Fone de ouvido - R$100";
     document.getElementById("quantidade").value = "";
     document.getElementById("lista-produtos").innerHTML = "";
+    document.getElementById("valor-total").textContent = "R$0";
 }
