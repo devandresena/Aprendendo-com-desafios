@@ -1,58 +1,42 @@
-//Incluir novo amigo
-let primeiroCadastro = true;
+let amigos = [];
+
 function adicionar() {
-    let novoNome = document.getElementById("nome-amigo").value;
-    
-    if (primeiroCadastro == true) {
-        document.getElementById("lista-amigos").textContent += novoNome;
-        primeiroCadastro = false;
+    let amigo = document.getElementById('nome-amigo');
+    let lista = document.getElementById('lista-amigos');
+
+    amigos.push(amigo.value);
+
+    if (lista.textContent == '') {
+        lista.textContent = amigo.value;
     } else {
-        document.getElementById("lista-amigos").textContent += `,${novoNome}`;
+        lista.textContent = lista.textContent + ', ' + amigo.value;
     }
 
+    amigo.value = '';
 }
-//Sortear novo amigo
+
 function sortear() {
-    nomesSorteio = document.getElementById("lista-amigos").textContent.split(",");
-    let presenteadoresSorteados = [];
-    let presenteadosSorteados = [];
-    let textoNomesSorteados = "";
-    let numeroAleatorioPresenteador;
-    let numeroAleatorioPresenteado;
+    embaralhar(amigos);
 
-    if (nomesSorteio.length < 2) {
-        alert("Precisa de pelo menos 2 nomes para realizar sorteio!");
-        return;
+    let sorteio = document.getElementById('lista-sorteio');
+    for (let i = 0; i < amigos.length; i++) {
+        if (i == amigos.length - 1) {
+            sorteio.innerHTML = sorteio.innerHTML + amigos[i] +' --> ' +amigos[0] + '<br/>';
+        } else {
+            sorteio.innerHTML = sorteio.innerHTML + amigos[i] +' --> ' +amigos[i + 1] + '<br/>';
+        }
     }
+}
 
-    for (let i = 0; i < nomesSorteio.length; i++) {
-        //Pessoa que vai dar o presente
-        do {
-            numeroAleatorioPresenteador = parseInt(Math.random() * nomesSorteio.length);
-        } while (presenteadoresSorteados.includes(numeroAleatorioPresenteador));
-        presenteadoresSorteados.push(numeroAleatorioPresenteador);
-
-        //Pessoa que vai receber o presente
-        do {
-            numeroAleatorioPresenteado = parseInt(Math.random() * nomesSorteio.length);
-            //Se for a última iteração e restar apenas o próprio nome, realiza sorteio novamente
-            if (numeroAleatorioPresenteado == numeroAleatorioPresenteador && nomesSorteio.length == i + 1) {
-                sortear();
-                return;
-            }
-        } while (presenteadosSorteados.includes(numeroAleatorioPresenteado) || numeroAleatorioPresenteado == numeroAleatorioPresenteador);
-
-        presenteadosSorteados.push(numeroAleatorioPresenteado);
-
-        //Formata texto final
-        textoNomesSorteados += `${nomesSorteio[numeroAleatorioPresenteador]} -> ${nomesSorteio[numeroAleatorioPresenteado]}<br>`;
-
+function embaralhar(lista) {
+    for (let indice = lista.length; indice; indice--) {
+        const indiceAleatorio = Math.floor(Math.random() * indice);
+        [lista[indice - 1], lista[indiceAleatorio]] = [lista[indiceAleatorio], lista[indice - 1]];
     }
-    document.getElementById("lista-sorteio").innerHTML = textoNomesSorteados;
 }
 
 function reiniciar() {
-    document.getElementById("lista-amigos").textContent = "";
-    document.getElementById("lista-sorteio").innerHTML = "";
-    primeiroCadastro = true;
+    amigos = [];
+    document.getElementById('lista-amigos').innerHTML = '';
+    document.getElementById('lista-sorteio').innerHTML = '';
 }
