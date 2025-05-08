@@ -35,6 +35,7 @@ function sortear() {
         //Pessoa que vai receber o presente
         do {
             numeroAleatorioPresenteado = parseInt(Math.random() * nomesSorteio.length);
+            //Se for a última iteração e restar apenas o próprio nome, realiza sorteio novamente
             if (numeroAleatorioPresenteado == numeroAleatorioPresenteador && nomesSorteio.length == i + 1) {
                 sortear();
                 return;
